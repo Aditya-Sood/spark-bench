@@ -31,6 +31,7 @@ object SparkSubmit extends Submitter {
       "Please check sparkHome in your config file or $SPARK_HOME in your environment."
     val sparkHome: String = conf.submissionParams.getOrElse("spark-home", throw SparkBenchException(errorMessage)).asInstanceOf[String]
     val preppedStatement = convert(conf, sparkHome)
+    preppedStatement.foreach(println)
     submit(preppedStatement, sparkHome)
   }
 
