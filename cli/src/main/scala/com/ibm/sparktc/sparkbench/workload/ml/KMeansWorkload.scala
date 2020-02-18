@@ -80,7 +80,16 @@ case class KMeansWorkload(input: Option[String],
     val (trainTime, model) = train(data, spark)
     val (testTime, _) = test(model, data, spark)
     val saveTime = output.foldLeft(0L) { case (_, _) => save(data, model, spark) }
+
+    // TODO: Print out each of the individual task times, build the project and update the jar
     val total = loadtime + trainTime + testTime + saveTime
+
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n###############################################\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIndividual costs of the kmeans (in nanoseconds)")
+    print("Cache loading time: ", loadtime)
+    print("Model training time: ", trainTime)
+    print("Model testing time: ", testTime)
+    print("Model saving time: ", saveTime)
+    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n###############################################\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
     val schema = StructType(
       List(
